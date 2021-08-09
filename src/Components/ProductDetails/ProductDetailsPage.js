@@ -46,55 +46,61 @@ function ProductDetailsPage(props) {
   }, []);
 
   return (
-    <div className={classes.ProductDetailsPageWrapper}>
-      <div className={classes.leftDivWrapper}>
-        <img src={imageUrl || preview} alt={name} />
-      </div>
-      <div className={classes.rightDivWrapper}>
-        <h1 className={classes.productName}>{name}</h1>
-        <h3 className={classes.productBrand}>{brand}</h3>
-        <h4 className={classes.sectionHeading}>
-          Price: Rs <span className={classes.productPrice}>{price}</span>
-        </h4>
-        <h3 className={classes.sectionHeading}>Description</h3>
-        <p className={classes.productDescription}>{description}</p>
-        <div>
-          <h3 className={classes.sectionHeading}>Product Preview</h3>
-          <div className={classes.smallImagesWrapper}>
-            {photos &&
-              photos.map((item, pos) => {
-                const imageClassName = [classes.smallImageDiv];
+    <div>
+      {isLoading ? (
+        <h1 className={classes.loadingText}>Loading...</h1>
+      ) : (
+        <div className={classes.ProductDetailsPageWrapper}>
+          <div className={classes.leftDivWrapper}>
+            <img src={imageUrl || preview} alt={name} />
+          </div>
+          <div className={classes.rightDivWrapper}>
+            <h1 className={classes.productName}>{name}</h1>
+            <h3 className={classes.productBrand}>{brand}</h3>
+            <h4 className={classes.sectionHeading}>
+              Price: Rs <span className={classes.productPrice}>{price}</span>
+            </h4>
+            <h3 className={classes.sectionHeading}>Description</h3>
+            <p className={classes.productDescription}>{description}</p>
+            <div>
+              <h3 className={classes.sectionHeading}>Product Preview</h3>
+              <div className={classes.smallImagesWrapper}>
+                {photos &&
+                  photos.map((item, pos) => {
+                    const imageClassName = [classes.smallImageDiv];
 
-                if (pos === imagePos) {
-                  imageClassName.length = 0;
-                  imageClassName.push(classes.smallImageDivWithBorder);
-                }
-                return (
-                  <div
-                    key={pos}
-                    className={imageClassName}
-                    onClick={() => changeImage(pos, item)}
-                  >
-                    <img src={item} alt={`${name}${pos}`} />
-                  </div>
-                );
-              })}
+                    if (pos === imagePos) {
+                      imageClassName.length = 0;
+                      imageClassName.push(classes.smallImageDivWithBorder);
+                    }
+                    return (
+                      <div
+                        key={pos}
+                        className={imageClassName}
+                        onClick={() => changeImage(pos, item)}
+                      >
+                        <img src={item} alt={`${name}${pos}`} />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <button
+              className={cartBtnClassname}
+              onClick={() => {
+                setcartBtnClassname([classes.bigger]);
+                setTimeout(() => {
+                  setcartBtnClassname([classes.addtoCartBtn]);
+                }, 200);
+                handleCartClick(id, name, preview, price);
+                incrementCart(cartCount ? cartCount : cartCount + 1);
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
-        <button
-          className={cartBtnClassname}
-          onClick={() => {
-            setcartBtnClassname([classes.bigger]);
-            setTimeout(() => {
-              setcartBtnClassname([classes.addtoCartBtn]);
-            }, 200);
-            handleCartClick(id, name, preview, price);
-            incrementCart(cartCount ? cartCount : cartCount + 1);
-          }}
-        >
-          Add to Cart
-        </button>
-      </div>
+      )}
     </div>
   );
 }

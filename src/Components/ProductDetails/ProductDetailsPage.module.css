@@ -3,6 +3,12 @@
   padding: 5% 5%;
 }
 
+.loadingText {
+  margin-top: 200px;
+  margin-bottom: 100px;
+  padding: 5%;
+}
+
 .leftDivWrapper {
   width: 100%;
 }
